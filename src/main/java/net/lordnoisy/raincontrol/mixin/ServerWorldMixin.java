@@ -1,12 +1,21 @@
 package net.lordnoisy.raincontrol.mixin;
 
 import net.lordnoisy.raincontrol.Configuration;
+import net.lordnoisy.raincontrol.RainControl;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.world.World;
 import net.minecraft.world.level.ServerWorldProperties;
+import org.apache.logging.log4j.core.jmx.Server;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.gen.Accessor;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
+
 import java.util.Random;
 
 import java.util.Map;
@@ -18,7 +27,11 @@ public class ServerWorldMixin {
 	Random random = new Random();
 
 	ServerWorld serverWorld = (ServerWorld) (Object) this;
+
+	@Shadow
 	ServerWorldProperties worldProperties;
+
+
 
 	private int minTimeUntilRain = Integer.valueOf(config.get("min_clear_weather"));
 	private int maxTimeUntilRain = Integer.valueOf(config.get("max_clear_weather"));
@@ -32,8 +45,8 @@ public class ServerWorldMixin {
 	private int rainWeatherTimer = this.random.nextInt(this.minTimeRainTime, this.maxTimeRainTime + 1);
 
 
-	@Inject(method = "tickWeather()V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/ServerWorldProperties;setRaining(Z)V", shift = At.Shift.AFTER))
-	private void tickWeather(CallbackInfo ci) {
+	@Inject(method = "tickWeather()V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/ServerWorldProperties;setThunderTime(I)V", shift = At.Shift.BEFORE), locals = LocalCapture.CAPTURE_FAILHARD)
+	private void tickWeather(CallbackInfo ci, boolean bl, int i, int j, int k, boolean bl2, boolean bl3) {
 		if(worldProperties.getLevelName().equals("world")) {
 			//Pick if it should thunder
 			boolean thunder = false;
@@ -67,16 +80,16 @@ public class ServerWorldMixin {
 			}
 
 			//Set all the values
-			this.worldProperties.setThunderTime(thunderTime);
-			this.worldProperties.setRainTime(rainWeatherTimer);
-			this.worldProperties.setClearWeatherTime(clearWeatherTimer);
-			this.worldProperties.setThundering(thunder);
-			this.worldProperties.setRaining(isRaining);
+			j = thunderTime;
+			k = rainWeatherTimer;
+			i = clearWeatherTimer;
+			bl2 = thunder;
+			bl3 = isRaining;
 		}
 	}
 
 	private void setClearWeatherTimer() {
-		this.clearWeatherTimer = this.random.nextInt(this.minTimeUntilRain, this.maxTimeUntilRain + 1);
+		this.rainWeatherTimer = this.random.nextInt(this.minTimeUntilRain, this.maxTimeUntilRain + 1);
 	}
 
 	private void setRainWeatherTimer() {
