@@ -66,11 +66,11 @@ public class Configuration {
     {
         List<String> defaults = new ArrayList<>();
 
-        defaults.add("# The minimum and maximum amount of time you want clear weather between rain, in ticks. Defaults equal 3.5-7.5 days");
+        defaults.add("# The minimum and maximum amount of time you want clear weather to last, in ticks. Defaults equal 3.5-7.5 days");
         defaults.add("min_clear_weather=72000");
         defaults.add("max_clear_weather=180000");
 
-        defaults.add("# The minimum and maximum amount of time you want rainy weather between rain, in ticks");
+        defaults.add("# The minimum and maximum amount of time you want rainy weather to last, in ticks");
         defaults.add("min_rainy_weather=1000");
         defaults.add("max_rainy_weather=18000");
 
