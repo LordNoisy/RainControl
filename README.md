@@ -21,6 +21,4 @@ As you can see everything is commented, and should be fairly self explanatory - 
 
 # Other
 
-The mod is open source, so you can checkout the repo [here](https://github.com/LordNoisy/RainControl) should it be of use to you :)
-
-Hopefully this mod can provide some use to you :)
+Thanks for checking out my mod, hopefully this can provide some use to you :)
