@@ -66,20 +66,23 @@ public class Configuration {
     {
         List<String> defaults = new ArrayList<>();
 
-        defaults.add("# The minimum and maximum amount of time you want clear weather to last, in ticks. Defaults equal 3.5-7.5 days");
-        defaults.add("min_clear_weather=84000");
+        defaults.add("# The minimum and maximum amount of time you want clear weather to last, in ticks. Defaults are set to vanilla");
+        defaults.add("min_clear_weather=12000");
         defaults.add("max_clear_weather=180000");
 
-        defaults.add("# The minimum and maximum amount of time you want rainy weather to last, in ticks");
-        defaults.add("min_rainy_weather=1000");
-        defaults.add("max_rainy_weather=18000");
+        defaults.add("# The minimum and maximum amount of time you want rainy weather to last, in ticks. Defaults are set to vanilla");
+        defaults.add("min_rainy_weather=12000");
+        defaults.add("max_rainy_weather=24000");
 
-        defaults.add("# The minimum and maximum amount of time you want thunder to go on for, in ticks");
+        defaults.add("# The minimum and maximum amount of time you want thunder to go on for, in ticks. Defaults are set to vanilla");
         defaults.add("min_thunder_weather=3600");
         defaults.add("max_thunder_weather=15600");
 
-        defaults.add("# The percentage chance it will thunder");
-        defaults.add("thunder_chance=20");
+        defaults.add("# The minimum and maximum amount of time you want between thunder storms, in ticks. Defaults are set to vanilla");
+        defaults.add("# Note: The maximum you pick will not necessarily be the in-game maximum, as thunder and rain have to coincide for the game to allow thunder");
+        defaults.add("# This means that the chance of a thunderstorm also relies on rain, so if you set the time between rain to be a high value, you might want to lower these values");
+        defaults.add("min_clear_thunder=12000");
+        defaults.add("max_clear_thunder=180000");
 
         return defaults;
     }
